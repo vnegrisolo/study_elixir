@@ -3,7 +3,7 @@ defmodule FibonacciTest do
   ExUnit.Case.register_attribute __ENV__, :values
   ExUnit.Case.register_attribute __ENV__, :module
 
-  [Fibonacci.Simple, Fibonacci.Accumulator]
+  [Fibonacci.Simple, Fibonacci.Accumulator, Fibonacci.Inverse]
   |> Enum.each(fn(module) ->
     describe "#{module}.fib/1" do
       @module module
