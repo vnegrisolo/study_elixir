@@ -1,22 +1,30 @@
 defmodule FibonacciTest do
   use ExUnit.Case, async: true
   ExUnit.Case.register_attribute __ENV__, :values
+  ExUnit.Case.register_attribute __ENV__, :module
 
-  describe "Fibonacci.Simple.fib/1" do
-    test "fibonacci for -1" do
-      assert_raise ArgumentError, fn ->
-        Fibonacci.Simple.fib(-1) == 1
+  [Fibonacci.Simple, Fibonacci.Accumulator]
+  |> Enum.each(fn(module) ->
+    describe "#{module}.fib/1" do
+      @module module
+      test "fibonacci for -1", context do
+        module = context.registered.module
+        assert_raise ArgumentError, fn ->
+          module.fib(-1) == 1
+        end
       end
+
+      [1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
+      |> Enum.with_index
+      |> Enum.each(fn({output, input}) ->
+        @module module
+        @values {input, output}
+        test "fibonacci for #{input}", context do
+          module = context.registered.module
+          {input, output} = context.registered.values
+          assert module.fib(input) == output
+        end
+      end)
     end
-
-    [1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
-    |> Enum.with_index
-    |> Enum.each(fn({output, input}) ->
-      @values {input, output}
-      test "fibonacci for #{input}", context do
-        {input, output} = context.registered.values
-        assert Fibonacci.Simple.fib(input) == output
-      end
-    end)
-  end
+  end)
 end
