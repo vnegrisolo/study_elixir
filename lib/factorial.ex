@@ -1,11 +1,11 @@
-defmodule Fibonacci do
+defmodule Factorial do
   @callback calc(integer) :: integer
 
   require ExProf.Macro
 
   @algorithms [
-    Fibonacci.Simple,
-    Fibonacci.Inverse,
+    Factorial.Simple,
+    Factorial.TailCall,
   ]
 
   @benchmarks %{
@@ -30,3 +30,4 @@ defmodule Fibonacci do
     ExProf.Macro.profile do: algorithm.calc(10)
   end
 end
+

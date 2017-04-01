@@ -1,25 +1,25 @@
-defmodule FibonacciTest do
+defmodule FactorialTest do
   use ExUnit.Case, async: true
   ExUnit.Case.register_attribute __ENV__, :values
   ExUnit.Case.register_attribute __ENV__, :module
 
-  [Fibonacci.Simple, Fibonacci.Inverse]
+  [Factorial.Simple, Factorial.TailCall]
   |> Enum.each(fn(module) ->
     describe "#{module}.calc/1" do
       @module module
-      test "fibonacci for -1", context do
+      test "factorial for -1", context do
         module = context.registered.module
         assert_raise ArgumentError, fn ->
           module.calc(-1) == 1
         end
       end
 
-      [1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
+      [1, 1, 2, 6, 24, 120, 720]
       |> Enum.with_index
       |> Enum.each(fn({output, input}) ->
         @module module
         @values {input, output}
-        test "fibonacci for #{input}", context do
+        test "factorial for #{input}", context do
           module = context.registered.module
           {input, output} = context.registered.values
           assert module.calc(input) == output
