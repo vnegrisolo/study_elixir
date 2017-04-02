@@ -1,0 +1,146 @@
+{
+  "mix.exs": { "type": "mix" },
+
+  "config/config.exs": { "type": "config" },
+  "config/*.exs": {
+    "type": "config",
+    "template":["use Mix.Config"],
+  },
+  "config/*.secret.exs": {
+    "type": "secret",
+    "template":["use Mix.Config"],
+  },
+
+  "priv/repo/migrations/*.exs": { "type": "migration" },
+  "priv/repo/seeds.exs": { "type": "seeds" },
+
+  "lib/blog/application.ex": { "type": "application" },
+  "lib/blog/repo.ex": { "type": "repo" },
+  "lib/blog/web/router.ex": { "type": "router" },
+  "lib/blog/web/web.ex": { "type": "web" },
+
+  "lib/blog/web/controllers": { "type": "controller" },
+  "lib/blog/web/controllers/*_controller.ex": {
+    "type": "controller",
+    "alternate": "test/web/controllers/{}_controller_test.exs",
+    "template":[
+      "defmodule {project|camelcase|capitalize|basename}.Web.{camelcase|capitalize|dot}Controller do",
+      "  use {project|camelcase|capitalize|basename}.Web, :controller",
+      "end",
+    ],
+  },
+  "test/web/controllers/*_controller_test.exs": {
+    "type": "tcontroller",
+    "alternate": "lib/blog/web/controllers/{}_controller.ex",
+    "template":[
+      "defmodule {project|camelcase|capitalize|basename}.Web.{camelcase|capitalize|dot}ControllerTest do",
+      "  use {project|camelcase|capitalize|basename}.Web.ConnCase, async: true",
+      "end",
+    ],
+  },
+
+  "lib/blog/web/views": { "type": "view" },
+  "lib/blog/web/views/*_view.ex": {
+    "type": "view",
+    "alternate": "test/web/views/{}_view_test.exs",
+    "template":[
+      "defmodule {project|camelcase|capitalize|basename}.Web.{camelcase|capitalize|dot}View do",
+      "  use {project|camelcase|capitalize|basename}.Web, :view",
+      "end",
+    ],
+  },
+  "test/web/views/*_view_test.exs": {
+    "type": "tview",
+    "alternate": "lib/blog/web/views/{}_view.ex",
+    "template":[
+      "defmodule {project|camelcase|capitalize|basename}.Web.{camelcase|capitalize|dot}ViewTest do",
+      "  use {project|camelcase|capitalize|basename}.Web.ConnCase, async: true",
+      "end",
+    ],
+  },
+
+  "lib/blog/web/channels": { "type": "channel" },
+  "lib/blog/web/channels/*_socket.ex": {
+    "type": "channel",
+    "alternate": "test/web/channels/{}_socket_test.exs",
+    "template":[
+      "defmodule {project|camelcase|capitalize|basename}.Web.{camelcase|capitalize|dot}Socket do",
+      "  use Phoenix.Socket",
+      "  # channel \"room:*\", Blog.Web.RoomChannel",
+      "  transport :websocket, Phoenix.Transports.WebSocket",
+      "",
+      "  def connect(_params, socket), do: {:ok, socket}",
+      "  def id(_socket), do: nil",
+      "end",
+    ],
+  },
+  "test/web/channels/*_socket_test.exs": {
+    "type": "tchannel",
+    "alternate": "lib/blog/web/channels/{}_socket.ex",
+    "template":[
+      "defmodule {project|camelcase|capitalize|basename}.Web.{camelcase|capitalize|dot}SocketTest do",
+      "  use {project|camelcase|capitalize|basename}.Web.ConnCase, async: true",
+      "end",
+    ],
+  },
+
+  "test/features": { "type": "features" },
+  "test/features/*_test.exs": {
+    "type": "features",
+    "template":[
+      "defmodule {project|camelcase|capitalize|basename}.Features.{camelcase|capitalize|dot}Test do",
+      "  use {project|camelcase|capitalize|basename}.FeatureCase, async: true",
+      "end",
+    ],
+  },
+
+  "lib": { "type": "lib" },
+  "lib/*.ex": {
+    "type": "lib",
+    "alternate": "test/lib/{}_test.exs",
+    "template":[
+      "defmodule {camelcase|capitalize|dot} do",
+      "end",
+    ],
+  },
+  "test": { "type": "test" },
+  "test/lib/*_test.exs": {
+    "alternate": "lib/{}.ex",
+    "template":[
+      "defmodule {camelcase|capitalize|dot} do",
+      "  use ExUnit.Case, async: true",
+      "end",
+    ],
+  },
+
+  "lib/blog/web/templates": { "type": "template" },
+  "lib/blog/web/templates/*.html.eex": { "type": "template" },
+
+  "assets/css": { "type": "stylesheet" },
+  "assets/css/*.css": { "type": "stylesheet" },
+  "assets/css/*.sass": { "type": "stylesheet" },
+  "assets/css/*.scss": { "type": "stylesheet" },
+
+  "assets/js": { "type": "javascript" },
+  "assets/js/*.js": { "type": "javascript" },
+
+  "test/test_helper.exs": { "type": "helper" },
+  "test/support": { "type": "support" },
+  "test/support/*.ex": {
+    "type": "support",
+    "template":[
+      "defmodule {project|camelcase|capitalize|basename}.{camelcase|capitalize|dot} do",
+      "  use ExUnit.CaseTemplate",
+      "",
+      "  using do",
+      "    quote do",
+      "    end",
+      "  end",
+      "",
+      "  setup tags do",
+      "    :ok",
+      "  end",
+      "end",
+    ],
+  },
+}
