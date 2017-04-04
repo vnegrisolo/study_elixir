@@ -7,7 +7,7 @@ defmodule Profile do
   def profile([algorithm|tail], input) do
     IO.puts "profile for #{algorithm}"
     ExProf.Macro.profile do
-      algorithm.calc(input)
+      algorithm.run(input)
     end
     profile(tail, input)
   end

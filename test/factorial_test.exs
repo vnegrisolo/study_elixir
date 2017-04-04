@@ -5,12 +5,12 @@ defmodule FactorialTest do
 
   [Factorial.Simple, Factorial.TailCall]
   |> Enum.each(fn(module) ->
-    describe "#{module}.calc/1" do
+    describe "#{module}.run/1" do
       @module module
       test "factorial for -1", context do
         module = context.registered.module
         assert_raise ArgumentError, fn ->
-          module.calc(-1) == 1
+          module.run(-1) == 1
         end
       end
 
@@ -22,7 +22,7 @@ defmodule FactorialTest do
         test "factorial for #{input}", context do
           module = context.registered.module
           {input, output} = context.registered.values
-          assert module.calc(input) == output
+          assert module.run(input) == output
         end
       end)
     end

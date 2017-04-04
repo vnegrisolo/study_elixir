@@ -9,6 +9,6 @@ defmodule Benchmark do
   end
 
   def benchmark(algorithm) do
-    {Atom.to_string(algorithm), fn(input) -> algorithm.calc(input) end}
+    {Atom.to_string(algorithm), fn(input) -> algorithm.run(input) end}
   end
 end

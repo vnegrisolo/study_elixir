@@ -1,7 +1,7 @@
 defmodule Fibonacci do
   @behaviour Benchmark
   @behaviour Profile
-  @callback calc(integer) :: integer
+  @callback run(integer) :: integer
 
   @algorithms [
     Fibonacci.Simple,
