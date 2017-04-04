@@ -1,7 +1,6 @@
 defmodule Fibonacci do
+  @behaviour Profile
   @callback calc(integer) :: integer
-
-  require ExProf.Macro
 
   @algorithms [
     Fibonacci.Simple,
@@ -14,19 +13,14 @@ defmodule Fibonacci do
     "Large"  => 25,
   }
 
+  def profile do
+    Profile.profile(@algorithms, 25)
+  end
+
   def benchmark do
     @algorithms
     |> Enum.map(&{Atom.to_string(&1), fn(n) -> &1.calc(n) end})
     |> Enum.into(%{})
     |> Benchee.run(time: 5, inputs: @benchmarks)
-  end
-
-  def profile do
-    @algorithms |> Enum.each(&profile/1)
-  end
-
-  defp profile(algorithm) do
-    IO.puts "profile for #{algorithm}"
-    ExProf.Macro.profile do: algorithm.calc(10)
   end
 end
