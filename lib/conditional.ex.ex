@@ -1,5 +1,7 @@
 defmodule Conditional do
-  require ExProf.Macro
+  @behaviour Benchmark
+  @behaviour Profile
+  @callback run(boolean) :: String.t
 
   @algorithms [
     Conditional.If,
@@ -7,31 +9,20 @@ defmodule Conditional do
     Conditional.Bool,
   ]
 
-  @benchmarks %{
-    "Truthy"  => true,
-    "Falsy" => false,
+  @inputs %{
+    truthy: true,
+    falsy: false,
   }
 
-  def benchmark do
-    @algorithms
-    |> Enum.map(&{Atom.to_string(&1), fn(n) -> &1.cond(n) end})
-    |> Enum.into(%{})
-    |> Benchee.run(time: 5, inputs: @benchmarks)
-  end
+  def benchmark, do: Benchmark.benchmark(@algorithms, @inputs)
 
-  def profile do
-    @algorithms |> Enum.each(&profile/1)
-  end
-
-  defp profile(algorithm) do
-    IO.puts "profile for #{algorithm}"
-    ExProf.Macro.profile do: algorithm.cond(true)
-    ExProf.Macro.profile do: algorithm.cond(false)
-  end
+  def profile, do: Profile.profile(@algorithms, @inputs.truthy)
 end
 
 defmodule Conditional.If do
-  def cond(input) do
+  @behaviour Conditional
+
+  def run(input) do
     if input == true do
       "true"
     else
@@ -41,7 +32,9 @@ defmodule Conditional.If do
 end
 
 defmodule Conditional.Case do
-  def cond(input) do
+  @behaviour Conditional
+
+  def run(input) do
     case input do
       true -> "true"
       _    -> "false"
@@ -50,7 +43,9 @@ defmodule Conditional.Case do
 end
 
 defmodule Conditional.Bool do
-  def cond(input) do
+  @behaviour Conditional
+
+  def run(input) do
     input == true && "true" || "false"
   end
 end

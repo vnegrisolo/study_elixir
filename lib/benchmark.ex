@@ -5,7 +5,7 @@ defmodule Benchmark do
     algorithms
     |> Enum.map(&benchmark/1)
     |> Enum.into(%{})
-    |> Benchee.run(time: 3, inputs: inputs)
+    |> Benchee.run(time: 5, inputs: inputs)
   end
 
   def benchmark(algorithm) do
