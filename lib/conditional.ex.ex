@@ -4,7 +4,8 @@ defmodule Conditional do
   @callback run(boolean) :: String.t
 
   @algorithms [
-    Conditional.If,
+    Conditional.If.Block,
+    Conditional.If.KeywordList,
     Conditional.Case,
     Conditional.Bool,
   ]
@@ -19,7 +20,7 @@ defmodule Conditional do
   def profile, do: Profile.profile(@algorithms, @inputs.truthy)
 end
 
-defmodule Conditional.If do
+defmodule Conditional.If.Block do
   @behaviour Conditional
 
   def run(input) do
@@ -28,6 +29,14 @@ defmodule Conditional.If do
     else
       "false"
     end
+  end
+end
+
+defmodule Conditional.If.KeywordList do
+  @behaviour Conditional
+
+  def run(input) do
+    if input == true, do: "true", else: "false"
   end
 end
 
