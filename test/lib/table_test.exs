@@ -4,9 +4,9 @@ defmodule TableTest do
 
   describe "table/1" do
     test "prints single line table" do
-      foo = %{id: 1, name: "foo"}
+      maps = [%{id: 1, name: "foo"}]
 
-      assert table([foo]) == """
+      assert table(maps) == """
       +----+------+
       | id | name |
       +----+------+
@@ -16,10 +16,12 @@ defmodule TableTest do
     end
 
     test "prints double line table" do
-      foo = %{id: 1, name: "foo"}
-      bar = %{id: 123, name: "bar"}
+      maps = [
+        %{id: 1, name: "foo"},
+        %{id: 123, name: "bar"},
+      ]
 
-      assert table([foo, bar]) == """
+      assert table(maps) == """
       +-----+------+
       | id  | name |
       +-----+------+

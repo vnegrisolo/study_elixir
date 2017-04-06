@@ -2,13 +2,17 @@ defmodule Table do
   import String, only: [pad_trailing: 2, pad_trailing: 3]
 
   def table(maps) do
+    maps = maps |> Enum.map(&to_map/1)
     pads = padding(maps)
-    bar = bar(pads)
+    bar  = bar(pads)
     head = head(pads)
     rows = maps |> Enum.map(&row(pads, &1))
 
     [bar, head, bar, rows, bar, ""] |> List.flatten |> Enum.join("\n")
   end
+
+  defp to_map(struct = %{__struct__: _}), do: struct |> Map.from_struct
+  defp to_map(map), do: map
 
   defp padding(maps) do
     Enum.reduce(maps, %{}, &padding/2) |> Map.to_list
