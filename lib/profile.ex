@@ -10,6 +10,10 @@ defmodule Profile do
     ExProf.Macro.profile do
       algorithm.run(input)
     end
+    |> table
+    |> IO.puts
     {:ok}
   end
+
+  defp table(records), do: Table.table(records)
 end
