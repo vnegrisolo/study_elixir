@@ -107,7 +107,7 @@
   "test/lib/*_test.exs": {
     "alternate": "lib/{}.ex",
     "template":[
-      "defmodule {camelcase|capitalize|dot} do",
+      "defmodule {camelcase|capitalize|dot}Test do",
       "  use ExUnit.Case, async: true",
       "end",
     ],
