@@ -1,7 +1,7 @@
 defmodule Profile do
   @callback profile :: {:ok}
 
-  @dir "profiles"
+  @profile_dir "profiles"
 
   require ExProf.Macro
 
@@ -17,6 +17,6 @@ defmodule Profile do
   end
 
   def save(table, algorithm) do
-    File.write("#{@dir}/#{algorithm}", table)
+    File.write("#{@profile_dir}/#{algorithm}", table)
   end
 end
