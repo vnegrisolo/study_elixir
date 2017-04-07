@@ -1,19 +1,22 @@
 defmodule Profile do
   @callback profile :: {:ok}
 
+  @dir "profiles"
+
   require ExProf.Macro
 
-  def profile([], _input), do: :ok
+  def profile([], _input), do: {:ok}
   def profile([algorithm|tail], input) do
-    IO.puts "profile for #{algorithm}"
-    profile(tail, input)
     ExProf.Macro.profile do
       algorithm.run(input)
     end
-    |> table
-    |> IO.puts
-    {:ok}
+    |> Table.table
+    |> save(algorithm)
+
+    profile(tail, input)
   end
 
-  defp table(records), do: Table.table(records)
+  def save(table, algorithm) do
+    File.write("#{@dir}/#{algorithm}", table)
+  end
 end
