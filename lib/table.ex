@@ -30,8 +30,12 @@ defmodule Table do
   defp row(pads, map), do: pads |> Enum.map(&row_col(&1, map)) |> line
 
   defp bar_col({_key, pad}), do: "-" |> pad_trailing(pad, "-")
-  defp head_col({key, pad}), do: "#{key}" |> pad_trailing(pad)
-  defp row_col({key, pad}, map), do: "#{map[key]}" |> pad_trailing(pad)
+  defp head_col({key, pad}), do: key |> format |> pad_trailing(pad)
+  defp row_col({key, pad}, map), do: map[key] |> format |> pad_trailing(pad)
+
+  defp format(value) when is_float(value), do: "#{Float.round(value, 2)}"
+  defp format(value), do: "#{value}"
+
 
   defp line(row, border \\ "|", separator \\ " ") do
     ["", row, ""]
@@ -41,6 +45,6 @@ defmodule Table do
   end
 
   defp max_length(x, y) do
-    [x, y] |> Enum.map(&String.length("#{&1}")) |> Enum.max
+    [x, y] |> Enum.map(&String.length(format(&1))) |> Enum.max
   end
 end
