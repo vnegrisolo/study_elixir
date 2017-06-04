@@ -16,4 +16,19 @@ defmodule HuffmanTreeTest do
       }
     end
   end
+
+  describe "HuffmanTree.encode/2" do
+    test "encode string" do
+      tree = %Node{
+        right: "A",
+        left: %Node{
+          right: "C",
+          left: %Node{
+            right: "B"
+          }
+        }
+      }
+      assert HuffmanTree.encode(tree, "ABACCA") == "1001101011"
+    end
+  end
 end
